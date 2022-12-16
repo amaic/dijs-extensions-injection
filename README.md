@@ -1,2 +1,2 @@
-# npm-project-template
-npm project template
+# dijs-extensions-injection
+adds registration with decorators and reflection 

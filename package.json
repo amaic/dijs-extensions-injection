@@ -1,7 +1,7 @@
 {
-  "name": "@amaic/npm-project-template",
+  "name": "@amaic/dijs-extensions-injection",
   "version": "0.1.1",
-  "description": "npm project template",
+  "description": "adds registration with decorators and reflection",
   "main": "dist/index.js",
   "scripts": {
     "delete": "rimraf ./dist/",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amaic/npm-project-template.git"
+    "url": "git+https://github.com/amaic/dijs-extensions-injection.git"
   },
   "keywords": [
     "npm"
@@ -19,9 +19,9 @@
   "author": "Alexander Mauri",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amaic/npm-project-template/issues"
+    "url": "https://github.com/amaic/dijs-extensions-injection/issues"
   },
-  "homepage": "https://github.com/amaic/npm-project-template#readme",
+  "homepage": "https://github.com/amaic/dijs-extensions-injection#readme",
   "devDependencies": {
     "@babel/core": "^7.19.6",
     "@babel/preset-env": "^7.19.4",
