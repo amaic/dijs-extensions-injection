@@ -1,27 +1,43 @@
 type Constructor<TYPE> = { new(...args: any[]): TYPE };
-type Dictionary<TYPE> = { [serviceInterfaceIdentifier: symbol]: Constructor<TYPE> };
+type ServiceDefinition = { constructor: Constructor<any>, parameterServiceIdentifiers: symbol[] };
+type Dictionary = { [serviceInterfaceIdentifier: symbol]: ServiceDefinition[] };
 
-const serviceConstructorsRepository: Dictionary<any> = {};
+const serviceDefinitions: Dictionary = {};
 
-export default function InjectService<INTERFACE, CLASSTYPE extends Constructor<INTERFACE>>(serviceInterfaceIdentifier: symbol)
+/**
+ * Decorator for service class.
+ * @param serviceInterfaceIdentifier unique service interface identifier
+ */
+export default function InjectService<INTERFACE, CLASSTYPE extends Constructor<INTERFACE>>(
+    serviceInterfaceIdentifier: symbol,
+    ...constructorParameterServiceIdentifiers: symbol[]
+)
 {
     return function (target: CLASSTYPE): void
     {
-        serviceConstructorsRepository[serviceInterfaceIdentifier] = target;
+        if (serviceDefinitions[serviceInterfaceIdentifier] == undefined)
+        {
+            serviceDefinitions[serviceInterfaceIdentifier] = [];
+        }
+        
+        serviceDefinitions[serviceInterfaceIdentifier].push({
+            constructor: target,
+            parameterServiceIdentifiers: constructorParameterServiceIdentifiers
+        });
     }
 }
 
-export function GetServiceConstructors(): Dictionary<any>
+export function GetServiceDefinitions(): Dictionary
 {
-    return { ...serviceConstructorsRepository };
+    return { ...serviceDefinitions };
 }
 
 export function ResetServiceConstructors(): void
 {
-    const keys = Object.getOwnPropertySymbols(serviceConstructorsRepository);
+    const keys = Object.getOwnPropertySymbols(serviceDefinitions);
 
     for (let key of keys)
     {
-        delete serviceConstructorsRepository[key];
+        delete serviceDefinitions[key];
     }
 }

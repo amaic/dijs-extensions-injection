@@ -23,8 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetServiceConstructors = exports.InjectService = void 0;
+exports.GetServiceDefinitions = exports.InjectService = void 0;
 const decorator_1 = __importStar(require("./decorator"));
 exports.InjectService = decorator_1.default;
-Object.defineProperty(exports, "GetServiceConstructors", { enumerable: true, get: function () { return decorator_1.GetServiceConstructors; } });
+Object.defineProperty(exports, "GetServiceDefinitions", { enumerable: true, get: function () { return decorator_1.GetServiceDefinitions; } });
 //# sourceMappingURL=index.js.map

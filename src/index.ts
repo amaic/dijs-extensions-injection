@@ -1,3 +1,3 @@
-import InjectService, { GetServiceConstructors } from "./decorator";
+import InjectService, { GetServiceDefinitions } from "./decorator";
 
-export { InjectService, GetServiceConstructors };
+export { InjectService, GetServiceDefinitions };

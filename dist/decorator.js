@@ -1,21 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResetServiceConstructors = exports.GetServiceConstructors = void 0;
-const serviceConstructorsRepository = {};
-function InjectService(serviceInterfaceIdentifier) {
+exports.ResetServiceConstructors = exports.GetServiceDefinitions = void 0;
+const serviceDefinitions = {};
+/**
+ * Decorator for service class.
+ * @param serviceInterfaceIdentifier unique service interface identifier
+ */
+function InjectService(serviceInterfaceIdentifier, ...constructorParameterServiceIdentifiers) {
     return function (target) {
-        serviceConstructorsRepository[serviceInterfaceIdentifier] = target;
+        if (serviceDefinitions[serviceInterfaceIdentifier] == undefined) {
+            serviceDefinitions[serviceInterfaceIdentifier] = [];
+        }
+        serviceDefinitions[serviceInterfaceIdentifier].push({
+            constructor: target,
+            parameterServiceIdentifiers: constructorParameterServiceIdentifiers
+        });
     };
 }
 exports.default = InjectService;
-function GetServiceConstructors() {
-    return Object.assign({}, serviceConstructorsRepository);
+function GetServiceDefinitions() {
+    return Object.assign({}, serviceDefinitions);
 }
-exports.GetServiceConstructors = GetServiceConstructors;
+exports.GetServiceDefinitions = GetServiceDefinitions;
 function ResetServiceConstructors() {
-    const keys = Object.getOwnPropertySymbols(serviceConstructorsRepository);
+    const keys = Object.getOwnPropertySymbols(serviceDefinitions);
     for (let key of keys) {
-        delete serviceConstructorsRepository[key];
+        delete serviceDefinitions[key];
     }
 }
 exports.ResetServiceConstructors = ResetServiceConstructors;
