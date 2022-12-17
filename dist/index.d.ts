@@ -1,1 +1,2 @@
-//# sourceMappingURL=index.d.ts.map
+import InjectService, { GetServiceConstructors } from "./decorator";
+export { InjectService, GetServiceConstructors };

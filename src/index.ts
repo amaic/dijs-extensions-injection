@@ -1,1 +1,3 @@
-console.info("npm-project-template");
+import InjectService, { GetServiceConstructors } from "./decorator";
+
+export { InjectService, GetServiceConstructors };
