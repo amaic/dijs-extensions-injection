@@ -1,7 +1,7 @@
 {
   "name": "@amaic/dijs-extensions-injection",
-  "version": "0.1.2",
-  "description": "adds registration with decorators and reflection",
+  "version": "0.2.0",
+  "description": "adds registration with decorators",
   "main": "dist/index.js",
   "scripts": {
     "delete": "rimraf ./dist/",
