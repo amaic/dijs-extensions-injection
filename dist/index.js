@@ -23,8 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetServiceDefinitions = exports.InjectService = void 0;
+exports.ServiceCollection = exports.GetServiceDefinitionsRepository = exports.InjectService = void 0;
 const decorator_1 = __importStar(require("./decorator"));
 exports.InjectService = decorator_1.default;
-Object.defineProperty(exports, "GetServiceDefinitions", { enumerable: true, get: function () { return decorator_1.GetServiceDefinitions; } });
+Object.defineProperty(exports, "GetServiceDefinitionsRepository", { enumerable: true, get: function () { return decorator_1.GetServiceDefinitionsRepository; } });
+const extension_1 = require("./extension");
+Object.defineProperty(exports, "ServiceCollection", { enumerable: true, get: function () { return extension_1.ServiceCollection; } });
 //# sourceMappingURL=index.js.map

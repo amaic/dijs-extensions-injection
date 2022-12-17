@@ -24,6 +24,7 @@
   "homepage": "https://github.com/amaic/dijs-extensions-injection#readme",
   "devDependencies": {
     "@babel/core": "^7.19.6",
+    "@babel/plugin-proposal-decorators": "^7.20.5",
     "@babel/preset-env": "^7.19.4",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.2.3",
@@ -33,5 +34,9 @@
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@amaic/dijs": "^0.8.1",
+    "@amaic/dijs-abstractions": "^0.8.0"
   }
 }

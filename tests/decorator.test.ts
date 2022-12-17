@@ -1,4 +1,4 @@
-import { InjectService, GetServiceDefinitions } from "../src";
+import { InjectService, GetServiceDefinitionsRepository } from "../src";
 import { ResetServiceConstructors } from "../src/decorator";
 
 describe("decorator", () =>
@@ -18,7 +18,7 @@ describe("decorator", () =>
 
         decoratorFunction(Foo);
 
-        const serviceDefinitions = GetServiceDefinitions();
+        const serviceDefinitions = GetServiceDefinitionsRepository();
 
         const serviceInterfaceIdentifiers = Object.getOwnPropertySymbols(serviceDefinitions);
 
@@ -34,7 +34,7 @@ describe("decorator", () =>
         @InjectService(IFooIdentifier)
         class Foo implements IFoo { };
 
-        const serviceDefinitions = GetServiceDefinitions();
+        const serviceDefinitions = GetServiceDefinitionsRepository();
 
         const serviceInterfaceIdentifiers = Object.getOwnPropertySymbols(serviceDefinitions);
 
@@ -61,21 +61,21 @@ describe("decorator", () =>
             }
         };
 
-        const serviceDefinitions = GetServiceDefinitions();
+        const serviceDefinitionsRepository = GetServiceDefinitionsRepository();
 
-        const serviceInterfaceIdentifiers = Object.getOwnPropertySymbols(serviceDefinitions);
+        const serviceInterfaceIdentifiers = Object.getOwnPropertySymbols(serviceDefinitionsRepository);
 
         expect(serviceInterfaceIdentifiers.length).toBe(2);
 
-        const barServiceDefinition = serviceDefinitions[IBarIdentifier];
+        const barServiceDefinitions = serviceDefinitionsRepository[IBarIdentifier];
 
-        expect(barServiceDefinition.length).toBe(1);
+        expect(barServiceDefinitions.length).toBe(1);
 
-        expect(barServiceDefinition[0].constructor).toBe(Bar);
+        expect(barServiceDefinitions[0].classType).toBe(Bar);
 
-        expect(barServiceDefinition[0].parameterServiceIdentifiers.length).toBe(1);
+        expect(barServiceDefinitions[0].parameterServiceIdentifiers.length).toBe(1);
 
-        expect(barServiceDefinition[0].parameterServiceIdentifiers).toContain(IFooIdentifier);
+        expect(barServiceDefinitions[0].parameterServiceIdentifiers).toContain(IFooIdentifier);
     });
 
 });

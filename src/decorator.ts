@@ -1,12 +1,12 @@
-type Constructor<TYPE> = { new(...args: any[]): TYPE };
-type ServiceDefinition = { constructor: Constructor<any>, parameterServiceIdentifiers: symbol[] };
-type Dictionary = { [serviceInterfaceIdentifier: symbol]: ServiceDefinition[] };
+import { Constructor } from "./types/Constructor";
+import { Dictionary } from "./types/Dictionary";
 
-const serviceDefinitions: Dictionary = {};
+const serviceDefinitionsRepository: Dictionary = {};
 
 /**
  * Decorator for service class.
  * @param serviceInterfaceIdentifier unique service interface identifier
+ * @param constructorParameterServiceIdentifiers service identifiers for constructor parameters
  */
 export default function InjectService<INTERFACE, CLASSTYPE extends Constructor<INTERFACE>>(
     serviceInterfaceIdentifier: symbol,
@@ -15,29 +15,33 @@ export default function InjectService<INTERFACE, CLASSTYPE extends Constructor<I
 {
     return function (target: CLASSTYPE): void
     {
-        if (serviceDefinitions[serviceInterfaceIdentifier] == undefined)
+        if (serviceDefinitionsRepository[serviceInterfaceIdentifier] == undefined)
         {
-            serviceDefinitions[serviceInterfaceIdentifier] = [];
+            serviceDefinitionsRepository[serviceInterfaceIdentifier] = [];
         }
         
-        serviceDefinitions[serviceInterfaceIdentifier].push({
-            constructor: target,
+        serviceDefinitionsRepository[serviceInterfaceIdentifier].push({
+            classType: target,
             parameterServiceIdentifiers: constructorParameterServiceIdentifiers
         });
     }
 }
 
-export function GetServiceDefinitions(): Dictionary
+/**
+ * Get all service defintions declared by InjectService decorator.
+ * @returns dictionary of service definitons
+ */
+export function GetServiceDefinitionsRepository(): Dictionary
 {
-    return { ...serviceDefinitions };
+    return { ...serviceDefinitionsRepository };
 }
 
 export function ResetServiceConstructors(): void
 {
-    const keys = Object.getOwnPropertySymbols(serviceDefinitions);
+    const keys = Object.getOwnPropertySymbols(serviceDefinitionsRepository);
 
     for (let key of keys)
     {
-        delete serviceDefinitions[key];
+        delete serviceDefinitionsRepository[key];
     }
 }

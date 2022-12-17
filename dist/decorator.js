@@ -1,31 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResetServiceConstructors = exports.GetServiceDefinitions = void 0;
-const serviceDefinitions = {};
+exports.ResetServiceConstructors = exports.GetServiceDefinitionsRepository = void 0;
+const serviceDefinitionsRepository = {};
 /**
  * Decorator for service class.
  * @param serviceInterfaceIdentifier unique service interface identifier
+ * @param constructorParameterServiceIdentifiers service identifiers for constructor parameters
  */
 function InjectService(serviceInterfaceIdentifier, ...constructorParameterServiceIdentifiers) {
     return function (target) {
-        if (serviceDefinitions[serviceInterfaceIdentifier] == undefined) {
-            serviceDefinitions[serviceInterfaceIdentifier] = [];
+        if (serviceDefinitionsRepository[serviceInterfaceIdentifier] == undefined) {
+            serviceDefinitionsRepository[serviceInterfaceIdentifier] = [];
         }
-        serviceDefinitions[serviceInterfaceIdentifier].push({
-            constructor: target,
+        serviceDefinitionsRepository[serviceInterfaceIdentifier].push({
+            classType: target,
             parameterServiceIdentifiers: constructorParameterServiceIdentifiers
         });
     };
 }
 exports.default = InjectService;
-function GetServiceDefinitions() {
-    return Object.assign({}, serviceDefinitions);
+/**
+ * Get all service defintions declared by InjectService decorator.
+ * @returns dictionary of service definitons
+ */
+function GetServiceDefinitionsRepository() {
+    return Object.assign({}, serviceDefinitionsRepository);
 }
-exports.GetServiceDefinitions = GetServiceDefinitions;
+exports.GetServiceDefinitionsRepository = GetServiceDefinitionsRepository;
 function ResetServiceConstructors() {
-    const keys = Object.getOwnPropertySymbols(serviceDefinitions);
+    const keys = Object.getOwnPropertySymbols(serviceDefinitionsRepository);
     for (let key of keys) {
-        delete serviceDefinitions[key];
+        delete serviceDefinitionsRepository[key];
     }
 }
 exports.ResetServiceConstructors = ResetServiceConstructors;
